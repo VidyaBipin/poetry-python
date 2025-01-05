@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 def test_python_get_version_on_the_fly() -> None:
     python = Python(executable=sys.executable)
 
-    assert python.executable == Path(sys.executable)
+    assert python.executable.resolve() == Path(sys.executable).resolve()
     assert python.version == Version.parse(
         ".".join([str(s) for s in sys.version_info[:3]])
     )
@@ -41,7 +41,7 @@ def test_python_get_version_on_the_fly() -> None:
 def test_python_get_system_python() -> None:
     python = Python.get_system_python()
 
-    assert python.executable == Path(sys.executable)
+    assert python.executable.resolve() == Path(sys.executable).resolve()
     assert python.version == Version.parse(
         ".".join(str(v) for v in sys.version_info[:3])
     )
@@ -50,7 +50,7 @@ def test_python_get_system_python() -> None:
 def test_python_get_preferred_default(config: Config) -> None:
     python = Python.get_preferred_python(config)
 
-    assert python.executable == Path(sys.executable)
+    assert python.executable.resolve() == Path(sys.executable).resolve()
     assert python.version == Version.parse(
         ".".join(str(v) for v in sys.version_info[:3])
     )
